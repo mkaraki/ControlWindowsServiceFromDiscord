@@ -79,6 +79,19 @@ namespace ControlWindowsServiceFromDiscord
                         sc.Stop();
                         QueryStatusAndSendInfo(sc, arg.Channel);
                         break;
+                    case "restart":
+                        if (permission < 2) arg.Channel.SendMessageAsync("Access is denied.");
+                        if (sc.Status==ServiceControllerStatus.Running)
+                        {
+                            sc.Stop();
+                            sc.WaitForStatus(ServiceControllerStatus.StopPending);
+                            QueryStatusAndSendInfo(sc, arg.Channel);
+                        }
+                        sc.WaitForStatus(ServiceControllerStatus.Stopped);
+                        sc.Start();
+                        sc.WaitForStatus(ServiceControllerStatus.StartPending);
+                        QueryStatusAndSendInfo(sc, arg.Channel);
+                        break;
                 }
             }
             catch (InvalidOperationException ex)
