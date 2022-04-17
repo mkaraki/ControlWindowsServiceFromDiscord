@@ -10,16 +10,13 @@ on:
 jobs:
   build:
     runs-on: windows-2019
-
+    env:
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
     steps:
       - uses: actions/checkout@v3
       - uses: warrenbuckley/Setup-Nuget@v1
-        with:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
       - run: nuget restore $Env:GITHUB_WORKSPACE\ControlWindowsServiceFromDiscord\ControlWindowsServiceFromDiscord.csproj
       - uses: warrenbuckley/Setup-MSBuild@v1
-        with:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
       - run: MSBuild.exe $Env:GITHUB_WORKSPACE\ControlWindowsServiceFromDiscord\ControlWindowsServiceFromDiscord.csproj -p:Configuration=Release
       - uses: actions/upload-artifact@v1.0.0
         with:
