@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: warrenbuckley/Setup-Nuget@v1
-      - run: nuget restore $Env:GITHUB_WORKSPACE\ControlWindowsServiceFromDiscord\ControlWindowsServiceFromDiscord.csproj
+      - run: nuget restore -SolutionDirectory $Env:GITHUB_WORKSPACE $Env:GITHUB_WORKSPACE\ControlWindowsServiceFromDiscord\ControlWindowsServiceFromDiscord.csproj
       - uses: warrenbuckley/Setup-MSBuild@v1
       - run: MSBuild.exe $Env:GITHUB_WORKSPACE\ControlWindowsServiceFromDiscord\ControlWindowsServiceFromDiscord.csproj -p:Configuration=Release
       - uses: actions/upload-artifact@v1.0.0
